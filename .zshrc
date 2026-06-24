@@ -1,6 +1,10 @@
 # Load SSH keys from the Apple keychain
 ssh-add --apple-load-keychain ~/.ssh/id_ed25519 2>/dev/null
 
+# Aliases
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+
 # highlight
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
