@@ -1,9 +1,16 @@
+# Local binaries (GitHub Copilot CLI, etc.)
+export PATH="$HOME/.local/bin:$PATH"
+
 # Load SSH keys from the Apple keychain
 ssh-add --apple-load-keychain ~/.ssh/id_ed25519 2>/dev/null
 
 # Aliases
 alias ls='ls --color=auto'
 alias ll='ls -alF'
+
+# GitHub Copilot CLI: ask from the shell, e.g. `ai how do I undo a commit`
+function _copilot_ask { copilot --silent -p "$*" }
+alias ai='noglob _copilot_ask'
 
 # highlight
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

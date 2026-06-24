@@ -24,6 +24,13 @@ if ! command -v gh >/dev/null 2>&1; then
   $SUDO apt install -y gh
 fi
 
+# Install GitHub Copilot CLI (into ~/.local/bin)
+if ! command -v copilot >/dev/null 2>&1; then
+  command -v curl >/dev/null 2>&1 || { $SUDO apt update && $SUDO apt install -y curl; }
+  export PATH="$HOME/.local/bin:$PATH"
+  curl -fsSL https://gh.io/copilot-install | PREFIX="$HOME/.local" bash
+fi
+
 # Symlink dotfiles
 ln -sfn "$DIR/.bashrc"    "$HOME/.bashrc"
 ln -sfn "$DIR/.gitconfig" "$HOME/.gitconfig"

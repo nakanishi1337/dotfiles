@@ -13,6 +13,12 @@ fi
 # Install packages
 brew bundle --file="$DIR/Brewfile"
 
+# Install GitHub Copilot CLI (into ~/.local/bin)
+if ! command -v copilot >/dev/null 2>&1; then
+  export PATH="$HOME/.local/bin:$PATH"
+  curl -fsSL https://gh.io/copilot-install | PREFIX="$HOME/.local" bash
+fi
+
 # Symlink dotfiles
 ln -sfn "$DIR/.zshrc"         "$HOME/.zshrc"
 ln -sfn "$DIR/.bashrc"        "$HOME/.bashrc"
