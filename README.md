@@ -5,14 +5,14 @@
 - .gitconfig: Git の共通設定
 - Brewfile: Homebrew で入れるツール一覧
 - ghostty/config: Ghostty の表示と端末設定
-- install.sh: macOS 用の自動セットアップスクリプト
+- install-mac.sh: macOS 用の自動セットアップスクリプト
 
 ## セットアップ (macOS)
 
 ```sh
 git clone https://github.com/nakanishi1337/dotfiles.git
 cd ./dotfiles
-./install.sh
+./install-mac.sh
 ```
 
 ## セットアップ (Ubuntu / リモートサーバー)
