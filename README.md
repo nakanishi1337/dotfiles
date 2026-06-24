@@ -6,6 +6,7 @@
 - Brewfile: Homebrew で入れるツール一覧
 - ghostty/config: Ghostty の表示と端末設定
 - install-mac.sh: macOS 用の自動セットアップスクリプト
+- install-ubuntu.sh: Ubuntu / リモートサーバー用の自動セットアップスクリプト
 
 ## セットアップ (macOS)
 
@@ -23,8 +24,5 @@ sudo apt install -y git
 
 git clone https://github.com/nakanishi1337/dotfiles.git
 cd ./dotfiles
-
-ln -sfn "$PWD/.bashrc" "$HOME/.bashrc"
-ln -sfn "$PWD/.gitconfig" "$HOME/.gitconfig"
-source "$HOME/.bashrc"
+./install-ubuntu.sh
 ```
