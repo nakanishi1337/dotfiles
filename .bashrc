@@ -6,7 +6,22 @@ PS1='\[\e[32m\][\u@\h] \[\e[34m\]\w\[\e[m\]\n\$ '
 
 # Aliases
 alias ls='ls --color=auto'
-alias ll='ls -alF'
+# ll: long listing but truncate owner/group names to 5 chars for readability
+ll() {
+  ls -alF "$@" | awk '
+    $1 == "total" { print; next }
+    NF >= 9 {
+      owner = substr($3, 1, 5)
+      group = substr($4, 1, 5)
+      name = $9
+      for (i = 10; i <= NF; i++) name = name " " $i
+      printf "%s %2s %-5s %-5s %8s %3s %2s %5s %s\n", \
+             $1, $2, owner, group, $5, $6, $7, $8, name
+      next
+    }
+    { print }
+  '
+}
 
 # GitHub Copilot CLI: ask from the shell, e.g. ai how do I undo a commit
 ai() { copilot --silent -p "$*"; }
