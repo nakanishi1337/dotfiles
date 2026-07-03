@@ -8,7 +8,7 @@ PS1='\[\e[32m\][\u@\h] \[\e[34m\]\w\[\e[m\]\n\$ '
 alias ls='ls --color=auto'
 # ll: long listing but truncate owner/group names to 5 chars for readability
 ll() {
-  ls -alF "$@" | awk '
+  ls -alF --color=always "$@" | awk '
     $1 == "total" { print; next }
     NF >= 9 {
       owner = substr($3, 1, 5)
