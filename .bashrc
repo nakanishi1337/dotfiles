@@ -6,6 +6,8 @@ PS1='\[\e[32m\][\u@\h] \[\e[34m\]\w\[\e[m\]\n\$ '
 
 # Aliases
 alias ls='ls --color=auto'
+alias vim='nvim'
+
 # ll: long listing but truncate owner/group names to 5 chars for readability
 ll() {
   ls -alF --color=always "$@" | awk '

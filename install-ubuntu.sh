@@ -28,6 +28,7 @@ fi
 $SUDO apt update
 $SUDO apt install -y \
   tmux
+  neovim
 
 # Install GitHub Copilot CLI (into ~/.local/bin)
 if ! command -v copilot >/dev/null 2>&1; then
