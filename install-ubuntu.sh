@@ -24,6 +24,11 @@ if ! command -v gh >/dev/null 2>&1; then
   $SUDO apt install -y gh
 fi
 
+# Install tmux
+$SUDO apt update
+$SUDO apt install -y \
+  tmux
+
 # Install GitHub Copilot CLI (into ~/.local/bin)
 if ! command -v copilot >/dev/null 2>&1; then
   command -v curl >/dev/null 2>&1 || { $SUDO apt update && $SUDO apt install -y curl; }
@@ -34,5 +39,6 @@ fi
 # Symlink dotfiles
 ln -sfn "$DIR/.bashrc"    "$HOME/.bashrc"
 ln -sfn "$DIR/.gitconfig" "$HOME/.gitconfig"
+ln -sfn "$DIR/.tmux.conf" "$HOME/.tmux.conf"
 
 echo "Done. Run 'gh auth login' to authenticate, then open a new terminal."
