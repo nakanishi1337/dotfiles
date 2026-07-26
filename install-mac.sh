@@ -26,4 +26,14 @@ ln -sfn "$DIR/.gitconfig"     "$HOME/.gitconfig"
 mkdir -p "$HOME/.config/ghostty"
 ln -sfn "$DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
+# macOS system preferences
+# Don't write .DS_Store
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+# Show all file extensions in Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# Show hidden files in Finder
+defaults write com.apple.finder AppleShowAllFiles -bool true
+killall Finder
+
 echo "Done. Open a new terminal."
