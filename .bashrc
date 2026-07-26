@@ -24,8 +24,8 @@ ll() {
 }
 
 # tmux open automatically
-if [ -z "$TMUX" ]; then
-    tmux attach-session -t default || tmux new-session -s default
+if [ -z "$TMUX" ] && [ -n "$PS1" ]; then
+    exec tmux new-session -A -s default
 fi
 
 # GitHub Copilot CLI: ask from the shell, e.g. ai how do I undo a commit
