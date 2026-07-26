@@ -23,6 +23,11 @@ ll() {
   '
 }
 
+# tmux open automatically
+if [ -z "$TMUX" ]; then
+    tmux attach-session -t default || tmux new-session -s default
+fi
+
 # GitHub Copilot CLI: ask from the shell, e.g. ai how do I undo a commit
 ai() { copilot --silent -p "$*"; }
 
