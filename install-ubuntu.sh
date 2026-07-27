@@ -27,8 +27,9 @@ fi
 # Install tmux
 $SUDO apt update
 $SUDO apt install -y \
-  tmux
-  neovim
+  tmux \
+  neovim \
+  unzip
 
 # lazygit
 if ! command -v lazygit &> /dev/null; then
@@ -37,6 +38,16 @@ if ! command -v lazygit &> /dev/null; then
     tar xf lazygit.tar.gz lazygit
     sudo install lazygit /usr/local/bin
     rm -f lazygit lazygit.tar.gz
+fi
+
+# yazi
+if ! command -v yazi &> /dev/null; then
+    sudo apt update && sudo apt install -y unzip && \
+    YAZI_VERSION=$(curl -s "https://api.github.com/repos/sxyazi/yazi/releases/latest" | grep -Po '"tag_name": "v\K[^"]*') && \
+    curl -sLo yazi.zip "https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip" && \
+    unzip -q yazi.zip && \
+    sudo mv yazi-x86_64-unknown-linux-gnu/yazi yazi-x86_64-unknown-linux-gnu/ya /usr/local/bin/ && \
+    rm -rf yazi.zip yazi-x86_64-unknown-linux-gnu
 fi
 
 # Install GitHub Copilot CLI (into ~/.local/bin)
