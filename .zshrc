@@ -24,6 +24,7 @@ ssh-add --apple-load-keychain ~/.ssh/id_ed25519 2>/dev/null
 # Aliases
 alias ls='ls --color=auto'
 alias ll='ls -alF'
+alias vim='nvim'
 
 # GitHub Copilot CLI
 function _copilot_ask {

@@ -20,7 +20,6 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     "$HOME/.oh-my-zsh"
 fi
 
-
 # Install GitHub Copilot CLI (into ~/.local/bin)
 if ! command -v copilot >/dev/null 2>&1; then
   export PATH="$HOME/.local/bin:$PATH"
@@ -28,9 +27,9 @@ if ! command -v copilot >/dev/null 2>&1; then
 fi
 
 # Symlink dotfiles
-ln -sfn "$DIR/.zshrc"         "$HOME/.zshrc"
-ln -sfn "$DIR/.bashrc"        "$HOME/.bashrc"
-ln -sfn "$DIR/.gitconfig"     "$HOME/.gitconfig"
+ln -sfn "$DIR/.zshrc" "$HOME/.zshrc"
+ln -sfn "$DIR/.bashrc" "$HOME/.bashrc"
+ln -sfn "$DIR/.gitconfig" "$HOME/.gitconfig"
 mkdir -p "$HOME/.config/ghostty"
 ln -sfn "$DIR/ghostty/config" "$HOME/.config/ghostty/config"
 mkdir -p "$HOME/.config"
