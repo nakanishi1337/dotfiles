@@ -33,6 +33,8 @@ ln -sfn "$DIR/.bashrc"        "$HOME/.bashrc"
 ln -sfn "$DIR/.gitconfig"     "$HOME/.gitconfig"
 mkdir -p "$HOME/.config/ghostty"
 ln -sfn "$DIR/ghostty/config" "$HOME/.config/ghostty/config"
+mkdir -p "$HOME/.config"
+ln -sfn "$DIR/nvim" "$HOME/.config/nvim"
 
 # macOS system preferences
 # Don't write .DS_Store
