@@ -13,6 +13,14 @@ fi
 # Install packages
 brew bundle --file="$DIR/Brewfile"
 
+# Install Oh My Zsh
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  git clone --depth=1 \
+    https://github.com/ohmyzsh/ohmyzsh.git \
+    "$HOME/.oh-my-zsh"
+fi
+
+
 # Install GitHub Copilot CLI (into ~/.local/bin)
 if ! command -v copilot >/dev/null 2>&1; then
   export PATH="$HOME/.local/bin:$PATH"
