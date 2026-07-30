@@ -22,9 +22,26 @@ source "$ZSH/oh-my-zsh.sh"
 ssh-add --apple-load-keychain ~/.ssh/id_ed25519 2>/dev/null
 
 # Aliases
-alias ls='ls --color=auto'
-alias ll='ls -alF'
+alias ls='eza'
+alias ll='eza -alF --git'
 alias vim='nvim'
+alias cat='bat'
+
+# fzf key bindings and fuzzy completion (Ctrl+R, Ctrl+T, Alt+C)
+source <(fzf --zsh)
+
+# zoxide: smarter cd (adds `z` command)
+eval "$(zoxide init zsh)"
+
+# yazi: cd to the last visited directory on exit
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+    cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
 
 # GitHub Copilot CLI
 function _copilot_ask {

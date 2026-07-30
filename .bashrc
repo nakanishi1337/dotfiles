@@ -9,8 +9,26 @@ else
 fi
 
 # Aliases
-alias ls='ls --color=auto'
+alias ls='eza'
 alias vim='nvim'
+alias cat='bat'
+
+# fzf key bindings and fuzzy completion (Ctrl+R, Ctrl+T, Alt+C)
+eval "$(fzf --bash)"
+
+# zoxide: smarter cd (adds `z` command)
+eval "$(zoxide init bash)"
+
+# yazi: cd to the last visited directory on exit
+y() {
+  local tmp cwd
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+    cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
 
 # ll: long listing but truncate owner/group names to 5 chars for readability
 ll() {

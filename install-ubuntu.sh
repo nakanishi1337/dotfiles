@@ -33,7 +33,16 @@ $SUDO apt install -y \
   ripgrep \
   fd-find \
   fzf \
-  xclip
+  xclip \
+  bat \
+  jq \
+  btop
+
+# bat installs as `batcat` on Debian/Ubuntu; symlink it to `bat`
+if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$(command -v batcat)" "$HOME/.local/bin/bat"
+fi
 
 # lazygit
 if ! command -v lazygit &> /dev/null; then
@@ -58,6 +67,38 @@ fi
 if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
   mkdir -p "$HOME/.local/bin"
   ln -sfn "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+
+# eza (not packaged for apt)
+if ! command -v eza &> /dev/null; then
+    curl -sLo eza.tar.gz "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz"
+    tar xf eza.tar.gz eza
+    sudo install eza /usr/local/bin
+    rm -f eza eza.tar.gz
+fi
+
+# git-delta (not packaged for apt)
+if ! command -v delta &> /dev/null; then
+    DELTA_VERSION=$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+    curl -sLo delta.tar.gz "https://github.com/dandavison/delta/releases/latest/download/delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+    tar xf delta.tar.gz "delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu/delta"
+    sudo install "delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu/delta" /usr/local/bin
+    rm -rf delta.tar.gz "delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu"
+fi
+
+# zoxide
+if ! command -v zoxide &> /dev/null; then
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+fi
+
+# Nerd Font (HackGen: Hack + Japanese Gothic, with Nerd Font icons)
+if [[ ! -f "$HOME/.local/share/fonts/HackGenConsoleNF-Regular.ttf" ]]; then
+    mkdir -p "$HOME/.local/share/fonts"
+    HACKGEN_URL=$(curl -s "https://api.github.com/repos/yuru7/HackGen/releases/latest" | grep -Po '"browser_download_url": "\K[^"]*HackGen_NF[^"]*\.zip')
+    curl -sLo /tmp/HackGenNF.zip "$HACKGEN_URL"
+    unzip -q -o -j /tmp/HackGenNF.zip "*.ttf" -d "$HOME/.local/share/fonts"
+    rm -f /tmp/HackGenNF.zip
+    fc-cache -f "$HOME/.local/share/fonts" >/dev/null 2>&1 || true
 fi
 
 # tree-sitter-cli (not packaged for apt)
