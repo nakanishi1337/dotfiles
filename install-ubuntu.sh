@@ -32,7 +32,8 @@ $SUDO apt install -y \
   unzip \
   ripgrep \
   fd-find \
-  fzf
+  fzf \
+  xclip
 
 # lazygit
 if ! command -v lazygit &> /dev/null; then
