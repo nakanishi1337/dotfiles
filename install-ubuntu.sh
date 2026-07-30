@@ -81,6 +81,21 @@ if ! command -v herdr &> /dev/null; then
     curl -fsSL https://herdr.dev/install.sh | sh
 fi
 
+# Node.js / npm (required for claude-code and codex CLIs)
+if ! command -v npm >/dev/null 2>&1; then
+  $SUDO apt update && $SUDO apt install -y nodejs npm
+fi
+
+# Claude Code CLI
+if ! command -v claude >/dev/null 2>&1; then
+  $SUDO npm install -g @anthropic-ai/claude-code
+fi
+
+# Codex CLI
+if ! command -v codex >/dev/null 2>&1; then
+  $SUDO npm install -g @openai/codex
+fi
+
 # Starship prompt
 if ! command -v starship >/dev/null 2>&1; then
   curl -fsSL https://starship.rs/install.sh | $SUDO sh -s -- --yes
