@@ -29,7 +29,10 @@ $SUDO apt update
 $SUDO apt install -y \
   tmux \
   neovim \
-  unzip
+  unzip \
+  ripgrep \
+  fd-find \
+  fzf
 
 # lazygit
 if ! command -v lazygit &> /dev/null; then
@@ -50,6 +53,20 @@ if ! command -v yazi &> /dev/null; then
     rm -rf yazi.zip yazi-x86_64-unknown-linux-gnu
 fi
 
+# fd-find installs as `fdfind` on Debian/Ubuntu; symlink it to `fd`
+if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+
+# tree-sitter-cli (not packaged for apt)
+if ! command -v tree-sitter &> /dev/null; then
+    curl -sLo tree-sitter.gz "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz"
+    gunzip -f tree-sitter.gz
+    chmod +x tree-sitter
+    sudo mv tree-sitter /usr/local/bin/
+fi
+
 # Starship prompt
 if ! command -v starship >/dev/null 2>&1; then
   curl -fsSL https://starship.rs/install.sh | $SUDO sh -s -- --yes
@@ -66,5 +83,7 @@ fi
 ln -sfn "$DIR/.bashrc"    "$HOME/.bashrc"
 ln -sfn "$DIR/.gitconfig" "$HOME/.gitconfig"
 ln -sfn "$DIR/.tmux.conf" "$HOME/.tmux.conf"
+mkdir -p "$HOME/.config"
+ln -sfn "$DIR/nvim" "$HOME/.config/nvim"
 
 echo "Done. Run 'gh auth login' to authenticate, then open a new terminal."
