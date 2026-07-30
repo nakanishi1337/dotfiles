@@ -68,6 +68,19 @@ if ! command -v tree-sitter &> /dev/null; then
     sudo mv tree-sitter /usr/local/bin/
 fi
 
+# zellij (not packaged for apt)
+if ! command -v zellij &> /dev/null; then
+    curl -sLo zellij.tar.gz "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz"
+    tar xf zellij.tar.gz zellij
+    sudo install zellij /usr/local/bin
+    rm -f zellij zellij.tar.gz
+fi
+
+# herdr (agent-aware terminal multiplexer)
+if ! command -v herdr &> /dev/null; then
+    curl -fsSL https://herdr.dev/install.sh | sh
+fi
+
 # Starship prompt
 if ! command -v starship >/dev/null 2>&1; then
   curl -fsSL https://starship.rs/install.sh | $SUDO sh -s -- --yes
