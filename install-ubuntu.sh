@@ -28,7 +28,6 @@ fi
 $SUDO apt update
 $SUDO apt install -y \
   tmux \
-  neovim \
   unzip \
   ripgrep \
   fd-find \
@@ -37,6 +36,29 @@ $SUDO apt install -y \
   bat \
   jq \
   btop
+
+# Neovim (AstroNvim v6 requires >= 0.10; Ubuntu's apt package is often too old,
+# so install the latest official release binary into ~/.local instead)
+NVIM_MIN_MAJOR=0
+NVIM_MIN_MINOR=10
+nvim_version_ok() {
+  command -v nvim >/dev/null 2>&1 || return 1
+  local ver major minor
+  ver="$(nvim --version | head -n1 | grep -Po '(?<=NVIM v)[0-9]+\.[0-9]+')"
+  major="${ver%%.*}"
+  minor="${ver##*.}"
+  [ "$major" -gt "$NVIM_MIN_MAJOR" ] && return 0
+  [ "$major" -eq "$NVIM_MIN_MAJOR" ] && [ "$minor" -ge "$NVIM_MIN_MINOR" ]
+}
+if ! nvim_version_ok; then
+  mkdir -p "$HOME/.local/bin"
+  curl -sLo /tmp/nvim-linux-x86_64.tar.gz \
+    "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+  rm -rf "$HOME/.local/nvim-linux-x86_64"
+  tar -C "$HOME/.local" -xzf /tmp/nvim-linux-x86_64.tar.gz
+  ln -sfn "$HOME/.local/nvim-linux-x86_64/bin/nvim" "$HOME/.local/bin/nvim"
+  rm -f /tmp/nvim-linux-x86_64.tar.gz
+fi
 
 # bat installs as `batcat` on Debian/Ubuntu; symlink it to `bat`
 if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
