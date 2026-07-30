@@ -72,7 +72,7 @@ fi
 # eza (not packaged for apt)
 if ! command -v eza &> /dev/null; then
     curl -sLo eza.tar.gz "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz"
-    tar xf eza.tar.gz eza
+    tar xf eza.tar.gz
     sudo install eza /usr/local/bin
     rm -f eza eza.tar.gz
 fi
