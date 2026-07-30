@@ -1,8 +1,12 @@
 # Local binaries (GitHub Copilot CLI, etc.)
 export PATH="$HOME/.local/bin:$PATH"
 
-# Prompt: 2-line style [user@host] path
-PS1='\[\e[32m\][\u@\h] \[\e[34m\]\w\[\e[m\]\n\$ '
+# Prompt: Starship if available, otherwise 2-line style [user@host] path
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+else
+  PS1='\[\e[32m\][\u@\h] \[\e[34m\]\w\[\e[m\]\n\$ '
+fi
 
 # Aliases
 alias ls='ls --color=auto'

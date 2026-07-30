@@ -50,6 +50,11 @@ if ! command -v yazi &> /dev/null; then
     rm -rf yazi.zip yazi-x86_64-unknown-linux-gnu
 fi
 
+# Starship prompt
+if ! command -v starship >/dev/null 2>&1; then
+  curl -fsSL https://starship.rs/install.sh | $SUDO sh -s -- --yes
+fi
+
 # Install GitHub Copilot CLI (into ~/.local/bin)
 if ! command -v copilot >/dev/null 2>&1; then
   command -v curl >/dev/null 2>&1 || { $SUDO apt update && $SUDO apt install -y curl; }
