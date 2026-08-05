@@ -43,12 +43,6 @@ function y() {
   rm -f -- "$tmp"
 }
 
-# GitHub Copilot CLI
-function _copilot_ask {
-  copilot --silent -p "$*"
-}
-alias ai='noglob _copilot_ask'
-
 # History
 setopt share_history
 setopt hist_ignore_dups
