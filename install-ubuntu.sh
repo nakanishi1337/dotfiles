@@ -173,6 +173,7 @@ fi
 
 # Symlink dotfiles
 ln -sfn "$DIR/.bashrc"    "$HOME/.bashrc"
+ln -sfn "$DIR/.profile"   "$HOME/.profile"
 ln -sfn "$DIR/.gitconfig" "$HOME/.gitconfig"
 ln -sfn "$DIR/.tmux.conf" "$HOME/.tmux.conf"
 mkdir -p "$HOME/.config"
