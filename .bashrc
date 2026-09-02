@@ -1,6 +1,17 @@
 # Local binaries (GitHub Copilot CLI, etc.)
 export PATH="$HOME/.local/bin:$PATH"
 
+# Fix stale SSH_AUTH_SOCK: when reattaching to a long-lived shell (tmux,
+# reused sessions, etc.) the forwarded agent socket from a previous SSH
+# connection can go away while the env var still points at it. If the
+# current SSH_AUTH_SOCK isn't a live socket, fall back to the newest
+# forwarded agent socket owned by us.
+if [[ -n "$SSH_CONNECTION" ]] && { [[ -z "$SSH_AUTH_SOCK" ]] || ! [[ -S "$SSH_AUTH_SOCK" ]]; }; then
+  fresh_sock=$(find /tmp -maxdepth 2 -type s -name 'agent.*' -uid "$(id -u)" -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -n1 | cut -d' ' -f2-)
+  [[ -S "$fresh_sock" ]] && export SSH_AUTH_SOCK="$fresh_sock"
+  unset fresh_sock
+fi
+
 # Prompt: Starship if available, otherwise 2-line style [user@host] path
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init bash)"
