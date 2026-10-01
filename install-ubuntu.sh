@@ -144,14 +144,20 @@ if ! command -v herdr &> /dev/null; then
     curl -fsSL https://herdr.dev/install.sh | sh
 fi
 
-# Node.js / npm (required for claude-code and codex CLIs)
+# Node.js / npm (required for Codex CLI)
 if ! command -v npm >/dev/null 2>&1; then
   $SUDO apt update && $SUDO apt install -y nodejs npm
 fi
 
-# Claude Code CLI
-if ! command -v claude >/dev/null 2>&1; then
-  $SUDO npm install -g @anthropic-ai/claude-code
+# Claude Code CLI (native installer; also repairs broken npm installations)
+export PATH="$HOME/.local/bin:$PATH"
+if ! claude --version >/dev/null 2>&1; then
+  claude_installer="$(mktemp)"
+  curl -fsSL https://claude.ai/install.sh -o "$claude_installer"
+  bash "$claude_installer"
+  rm -f "$claude_installer"
+  hash -r
+  claude --version
 fi
 
 # Codex CLI
